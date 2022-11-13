@@ -1,0 +1,182 @@
+<div class="container-fluid">
+    <div class="column">
+        <div class="row">
+            <app-header></app-header>
+        </div>
+        <div class="row p-3">
+         <section>This calculator determines your mortgage payment and provides you with a mortgage payment schedule. The calculator also shows how much money and how many years you can save by making prepayments.</section>
+        <!-- Pre payment calculation form -->
+        <form [formGroup]="paymentForm">
+            <div *ngIf="showMandateAlert" class="alert alert-danger">Please enter all mandatory data</div>
+        <div class="row p-3">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+                <div class="card  paymentCard">
+                    <div class="card-header text-white h4">Payment Plan</div>
+                        <div class="card-body">
+                               <div class="row">
+                                <div class="col-lg-4 col-sm-6">
+                                        <label class="h5">Mortgage Amount</label>&nbsp;
+                                        <img src="assets/help.png" data-bs-toggle="tooltip" data-bs-placement="right" title="The amount you expect to borrow from your financial institution" class="helpIcon">
+                                    
+                                    </div>
+                                    <div class="input-group col">
+                                        <span class="input-group-text" id="basic-addon1">$</span>
+                                        <input type="text" autofocus class="form-control" autofocus="autofocus" formControlName="mortgageAmount">
+                                         <!-- [value]="paymentForm.get('mortgageAmount').value !=== null ? paymentForm.get('mortgageAmount').value | number: '1.2-2' : null"> -->
+                                        <div class="alert alert-danger m-1 h6" *ngIf="paymentForm.get('mortgageAmount')?.errors?.['paymentValue']">Mortgage Amount should be more than 0</div>
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-lg-4 col-sm-6">
+                                    <label class="h5">Interest Rate</label>&nbsp;
+                                    <img src="assets/help.png" class="helpIcon">
+                                    </div>
+                                    <div class="input-group col">
+                                       <input type="text" class="form-control" formControlName="interestRate" aria-describedby="basic-addon1">
+                                       <span class="input-group-text" id="basic-addon1">%</span>
+                                       <div class="alert alert-danger m-1 h6" *ngIf="paymentForm.get('interestRate')?.errors?.['invalidInterest']">Please enter interest rate more than 0 and less than 100</div>
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                    <label class="h5">Amortization Period</label>&nbsp;
+                                    <img src="assets/help.png" class="helpIcon">
+                                    </div>
+                                    <div class="input-group col">
+                                        <select class="form-select" formControlName="amortizationPeriod">
+                                            <option [ngValue]="i" *ngFor="let i of yearsArray;">{{i}} {{i === 1 ? 'Year':'Years'}}</option>
+                                        </select>
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                    <label class="h5">Payment Frequency:</label>&nbsp;
+                                    <img src="assets/help.png" class="helpIcon">
+                                    </div>
+                                    <div class="input-group col">
+                                       <select class="form-select" formControlName="paymentFrequency">
+                                        <option>Accelerated Weekly</option>
+                                        <option>Weekly</option>
+                                        <option>Accelerated Bi-weekly</option>
+                                        <option>Bi-weekly(every 2 weeks)</option>
+                                        <option>Semi-monthy(24x per year)</option>
+                                        <option selected>Monthly(12x per year)</option>
+                                       </select>
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                    <label class="h5">Term</label>&nbsp;
+                                    <img src="assets/help.png" class="helpIcon">
+                                    </div>
+                                    <div class="input-group col">
+                                      <select class="form-select" formControlName="term">
+                                        <option [ngValue]="i" *ngFor="let i of termYearsArray">{{i}} {{i===1 ? 'Year':'Years'}}</option>
+                                      </select>
+                                      <div class="alert alert-danger m-1 h6" *ngIf="paymentForm.get('term')?.errors?.['isTermValueGreater']">Term value should not be more than amortization period.</div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+            <!--  -->
+            <!-- Pre payment card -->
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+                <div class="card  paymentCard">
+                    <div class="card-header text-white h4">Prepayment Plan</div>
+                        <div class="card-body">
+                               <div class="row">
+                                <div class="col-lg-4">
+                                        <label class="h5">Prepayment Amount</label>&nbsp;
+                                        <img src="assets/help.png" class="helpIcon">
+                                        </div>
+                                    <div class="input-group col">
+                                        <span class="input-group-text" id="basic-addon1">$</span>
+                                        <input type="text" class="form-control" formControlName="prepaymentAmount">
+                                        <div class="alert alert-danger m-1 h6" *ngIf="paymentForm.get('prepaymentAmount')?.errors?.['isCurrentValueGreater']">Prepayment should not be more than mortgage amount.</div>
+                                    </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                    <label class="h5">Payment Frequency</label>&nbsp;
+                                    <img src="assets/help.png" class="helpIcon">
+                                    </div>
+                                    <div class="input-group col">
+                                      <select class="form-select" formControlName="prepaymentFrequency">
+                                        <option>One time</option>
+                                        <option>Each year</option>
+                                        <option>Same as regular payment</option>
+                                      </select>
+                                      </div>
+                                </div><br>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                    <label class="h5">Start With Payment</label>&nbsp;
+                                    <img src="assets/help.png" class="helpIcon">
+                                    </div>
+                                <div class="input-group col">
+                                    <input formControlName="startWithPayment" type="text" class="form-control" aria-describedby="basic-addon1">
+                                    <div class="alert alert-danger m-1 h6" *ngIf="paymentForm.get('startWithPayment')?.errors?.['isCurrentValueGreater']">Start with payment should be less than or equal to amortization period.</div>
+                                </div>
+                               </div><br>
+                            <!-- </form> -->
+                        </div> 
+                    </div>  
+        </div>
+ 
+        <!-- prepayment calculation ends -->
+        <div>
+            <button class="btn btn-md btn-success col-lg-2 col-sm-4 m-3 calculateBtn" type="button" (click)="calculatePayment()">Calculate</button>
+        </div>
+        
+           <!-- mortage calculation table  -->
+        <div *ngIf="showPaymentCalculation" class="col">
+            <h4 class="text-center">Calculation Summary</h4>
+            <table class="table table-striped table-bordered">
+                <!-- On rows -->
+                <thead>
+                    <tr>
+                        <th class="h5">Category</th>
+                        <th class="h5">Term</th>
+                        <th class="h5">Amortization Period</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pay of paymentPlanArray">
+                        <td class="row"><img src="assets/help.png" class="helpIcon">&nbsp;<blockquote class="blockquote">{{pay.category}}</blockquote></td>
+                        <td><blockquote class="blockquote">{{pay.termValue}}</blockquote></td>
+                        <td><blockquote class="blockquote">{{pay.amortizationValue}}</blockquote></td>
+                    </tr>
+                </tbody>
+              </table>
+
+           </div>
+    </div>
+</form>
+
+<div  *ngIf="showPaymentCalculation">
+    <div>
+    <h2>Mortgage Summary</h2>
+    <section>
+        Over the {{amortizationPeriod}}-year amortization period, you will:
+        <ul>
+            <li> have made  <strong>{{numberOfAmortizationPayments}}</strong> {{selectedPaymentFrequency}} payments of <strong></strong>{{mortgagePayment}}.</li>
+            <li>have paid <strong>${{principalMortgageAmount | number: '1.2-2'}}</strong> in principal, <strong>${{totalAmortizationInterestPayments}}</strong> in interest, for a total of <strong>${{totalAmortizationCost}}</strong>.</li>
+        </ul>
+        Over the {{numberOfTermYears}}-year term, you will:
+        <ul>
+            <li>have made <strong>{{numberOfTermPayments}}</strong> {{selectedPaymentFrequency}} payments of <strong>${{mortgagePayment}}</strong>.</li>
+            <li>have paid <strong>${{termPrincipalAmount}}</strong> in principal, <strong>${{totalTermInterestPayments}}</strong> in interest, for a total of<strong>${{totalTermCost}}</strong>.</li>
+        </ul>
+        At the end of your -year term, you will:
+        <ul>
+            <li>have a balance of <strong>${{outstandingPrincipalBalance | number: '1.2-2' }}</strong>.</li>
+        </ul>
+</section>
+</div>
+</div>
+        <div class="row">
+          <app-footer></app-footer>
+        </div>
+    </div>
+</div>
