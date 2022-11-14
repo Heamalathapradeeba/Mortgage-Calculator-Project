@@ -9,6 +9,7 @@ import { FooterComponent } from './shared/footer/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CurrencyFormatterDirective } from './shared/currencyFormatterDirective/currency-formatter.directive';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,6 +17,7 @@ import { CurrencyFormatterDirective } from './shared/currencyFormatterDirective/
     HeaderComponent,
     FooterComponent,
     CurrencyFormatterDirective,
+   
 
   ],
   imports: [

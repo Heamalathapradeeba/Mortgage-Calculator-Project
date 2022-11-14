@@ -3,15 +3,16 @@
 }
 
 .calculateBtn{
-    // background-color: #324d75;
-    // color: white;
     font-weight: 700;
-    // font-family: ui-sans-serif;
      border-radius: 20px;
 }
 
 .card-header{
     background-color: #324d75;
+}
+
+.paymentLabel{
+    font-weight: 800;
 }
 
 .helpIcon{
@@ -20,4 +21,8 @@
     position: relative;
     bottom: 2px;
     cursor: pointer;
+}
+
+.tooltip{
+    background-color: violet !important;
 }
