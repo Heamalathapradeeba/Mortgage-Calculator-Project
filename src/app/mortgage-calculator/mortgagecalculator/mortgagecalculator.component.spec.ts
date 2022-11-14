@@ -28,9 +28,7 @@ describe('MortgagecalculatorComponent', () => {
     component.numberOfTermPayments = 12;
     component.totalPrincipalPaid = 500;
     component.termPrincipalAmount = 500;
-    const termprincipal = 500;
     const n = 13;
-    component.calculatePaymentValues(termprincipal, n);
     expect(n).toBeGreaterThan(component.numberOfTermPayments);
     expect(component.termPrincipalAmount).toEqual(component.totalPrincipalPaid);
 
