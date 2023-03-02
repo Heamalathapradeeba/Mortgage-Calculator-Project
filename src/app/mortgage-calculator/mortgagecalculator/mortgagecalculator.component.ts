@@ -1,9 +1,11 @@
 import { Component,OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataService } from 'src/app/data.service';
 import { CalculationSummary } from 'src/app/models/calculation-summary.interface';
 import { greaterThanValueValidator } from 'src/app/shared/greaterThanValueValidator/greater-than-value.directive';
 import { interestValueValidator } from 'src/app/shared/interestValueValidator/interest-value.directive';
 import { paymentValueValidator } from 'src/app/shared/paymentValueValidator/payment-value.directive';
+import { yearsArray } from 'src/app/years';
 
 @Component({
   selector: 'app-mortgagecalculator',
@@ -12,7 +14,7 @@ import { paymentValueValidator } from 'src/app/shared/paymentValueValidator/paym
 })
 export class MortgagecalculatorComponent implements OnInit {
  yearsArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20.21,22,23,24,25];
- termYearsArray = [1,2,3,4,5,6,7,8,9,10];
+ termYearsArray: yearsArray[] = [];
  showPaymentCalculation: boolean = false;
  paymentForm: FormGroup = this.formBuilder.group({
   mortgageAmount:      ['', [Validators.required, paymentValueValidator()]],
@@ -58,11 +60,18 @@ export class MortgagecalculatorComponent implements OnInit {
   type!: string;
   prepaymentFrequency: string = '';
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private dataservice: DataService) {
    }
 
   ngOnInit(): void {
-    
+    this.getYears();
+  }
+
+  getYears(){
+      this.dataservice.getYearsArray().subscribe(res => {
+        this.termYearsArray = res;
+        console.log(this.termYearsArray, 'Termyears');
+      })
   }
 
   // calculation for mortgage payment
@@ -76,35 +85,30 @@ export class MortgagecalculatorComponent implements OnInit {
     else{
       // if payment array has previous data then reset it
       if(this.paymentCalculationArray.length !== 0){
-        this.paymentCalculationArray = [];
-        this.totalPrepaymentAmount               =  0;
-        this.totalInterestSum                    =  0;
-        this.totalPrincipalPaid                  =  0;
-        this.totalPrepaymentAmount               =  0;
-        this.outstandingPrincipalBalance         =  0;
-        this.termInterestSavingswithPrepayment   =  0;
-        this.amortizationInterestSavingswithPrepayment = 0;
-  
+        this.paymentCalculationArray.length = 0;
+
+         //resetting all values to zero
+         this.totalPrepaymentAmount, this.totalInterestSum, this.totalPrincipalPaid, this.totalPrepaymentAmount
+         this.outstandingPrincipalBalance, this.termInterestSavingswithPrepayment, this.amortizationInterestSavingswithPrepayment  =  0;  
       }
       // reset mandate alert boolean
       this.showMandateAlert = false;
 
       // number of payments differs for payment frequency
-
   switch(this.paymentForm.value.paymentFrequency){
       case 'Accelerated Weekly':{
          this.numberOfAmortizationPayments = 56*this.paymentForm.value.amortizationPeriod;
-         this.numberOfTermPayments         = 56*this.paymentForm.value.term;
+         this.numberOfTermPayments         = 56*this.paymentForm.value.term.value;
          break;
       }
        case 'Weekly': {
        this.numberOfAmortizationPayments = 54*this.paymentForm.value.amortizationPeriod;
-       this.numberOfTermPayments         = 54*this.paymentForm.value.term;
+       this.numberOfTermPayments         = 54*this.paymentForm.value.term.value;
        break;
        }
        case 'Accelerated Bi-weekly': {
        this.numberOfAmortizationPayments = 24*this.paymentForm.value.amortizationPeriod;
-       this.numberOfTermPayments         = 24*this.paymentForm.value.term;
+       this.numberOfTermPayments         = 24*this.paymentForm.value.term.value;
        break;
        }
       case 'Bi-weekly(every 2 weeks)': {

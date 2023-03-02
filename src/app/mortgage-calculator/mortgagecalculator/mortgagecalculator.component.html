@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="input-group col">
                                       <select class="form-select" formControlName="term">
-                                        <option [ngValue]="i" *ngFor="let i of termYearsArray">{{i}} {{i===1 ? 'Year':'Years'}}</option>
+                                        <option [ngValue]="i" *ngFor="let i of termYearsArray">{{i.value}} {{i.value === 1 ? 'Year':'Years'}}</option>
                                       </select>
                                       <div class="alert alert-danger m-1 h6" *ngIf="paymentForm.get('term')?.errors?.['isTermValueGreater']">Term value should not be more than amortization period.</div>
                                     </div>
