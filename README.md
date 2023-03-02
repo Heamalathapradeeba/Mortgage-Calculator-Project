@@ -1,11 +1,11 @@
-This project has mortgage calculations with various mortgage input and output calculations like Amortization, Loan Amount, Interest, Interest Savings.
-
-Major Angular Design patterns used here is:
+This project uses Angular Design patterns and angular core features like:
 1. Structural Directives - ngFor and ngIf
 2. Angular Forms
 3. Component
 4. Custom Directives
+5. Dependency Injection
 
+This project has mortgage calculations with various mortgage input and output calculations like Amortization, Loan Amount, Interest, Interest Savings.
 
 # MortgageCalculatorProject
 
