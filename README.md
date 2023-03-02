@@ -1,3 +1,12 @@
+This project has mortgage calculations with various mortgage input and output calculations like Amortization, Loan Amount, Interest, Interest Savings.
+
+Major Angular Design patterns used here is:
+1. Structural Directives - ngFor and ngIf
+2. Angular Forms
+3. Component
+4. Custom Directives
+
+
 # MortgageCalculatorProject
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
