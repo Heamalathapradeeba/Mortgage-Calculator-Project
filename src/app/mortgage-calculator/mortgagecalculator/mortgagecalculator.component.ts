@@ -168,17 +168,17 @@ this.totalAmortizationCost               = parseFloat(this.totalAmortizationCost
 this.totalTermCost                       = parseFloat(this.totalTermCost.toFixed(2));
 
 this.paymentCalculationArray.push(
-  {'title': "The number of payments made during the Term and Amoritization period respectively.",
-   'category':'Number Of Payments',   'termValue':this.numberOfTermPayments, 'amortizationValue': this.numberOfAmortizationPayments}, 
-  {'title': "The amount you will pay per period during the Term and Amoritization respectively, which include a portion for the principal payment and a portion for the interest payment.",
-   'category':'Mortgage Payment',  'termValue':'$'+this.mortgagePayment, 'amortizationValue': '$'+this.mortgagePayment}, 
-  {'title': "The amount of prepayment made during the Term and Amoritization period respectively.",
-    'category':'Prepayment',        'termValue':'$'+this.totalPrepaymentAmount, 'amortizationValue': '$'+this.totalPrepaymentAmount},
-  {'title': "The total amount of principal payment made during the Term and Amoritization period respectively.",
-    'category':'Principal Payments','termValue':'$'+this.termPrincipalAmount, 'amortizationValue': '$'+this.paymentForm.value.mortgageAmount},
-  {'title': "Total of all interest paid during the Term and Amoritization period respectively.",
-    'category':'Interest Payments', 'termValue':'$'+this.totalTermInterestPayments, 'amortizationValue': '$'+this.totalInterestSum}, 
-  {'title': "Total of all payments made during the Term and Amoritization period respectively.",'category': 'Total Cost',       'termValue':'$'+this.totalTermCost, 'amortizationValue': '$'+this.totalAmortizationCost}
+  {title: "The number of payments made during the Term and Amoritization period respectively.",
+   category:'Number Of Payments', termValue:this.numberOfTermPayments, amortizationValue: this.numberOfAmortizationPayments}, 
+  {title: "The amount you will pay per period during the Term and Amoritization respectively, which include a portion for the principal payment and a portion for the interest payment.",
+   category:'Mortgage Payment',  termValue:'$'+this.mortgagePayment, amortizationValue: '$'+this.mortgagePayment}, 
+  {title: "The amount of prepayment made during the Term and Amoritization period respectively.",
+    category:'Prepayment',        termValue:'$'+this.totalPrepaymentAmount, amortizationValue: '$'+this.totalPrepaymentAmount},
+  {title: "The total amount of principal payment made during the Term and Amoritization period respectively.",
+    category:'Principal Payments',termValue:'$'+this.termPrincipalAmount, amortizationValue: '$'+this.paymentForm.value.mortgageAmount},
+  {title: "Total of all interest paid during the Term and Amoritization period respectively.",
+    category:'Interest Payments', termValue:'$'+this.totalTermInterestPayments, amortizationValue: '$'+this.totalInterestSum}, 
+  {title: "Total of all payments made during the Term and Amoritization period respectively.",category: 'Total Cost',  termValue:'$'+this.totalTermCost, amortizationValue: '$'+this.totalAmortizationCost}
   );
 
   if(this.paymentForm.value.prepaymentAmount > 0){

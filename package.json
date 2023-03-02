@@ -1,12 +1,15 @@
 {
   "name": "mortgage-calculator-project",
   "version": "0.0.0",
+  "homepage": "https://heamalathapradeeba.github.io/Mortgage-Calculator-Project/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "private": true,
   "dependencies": {
